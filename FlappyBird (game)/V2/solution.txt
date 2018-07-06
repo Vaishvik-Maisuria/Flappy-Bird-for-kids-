@@ -1,0 +1,73 @@
+
+# PHASE 0: Make everything work continuously 
+	//SHOWCODE
+	while True:
+
+
+
+# PHASE 1: get black screen
+	//SHOWCODE
+	game = Flappybird()
+
+
+# PHASE 2: Add background
+	//SHOWCODE
+	game.loadBackground("day")
+    
+    	game.loadGameStart()
+    	checkForStart(game)
+	
+	clock = game.getClock()
+
+# PHASE 3: Add bird
+	//SHOWCODE
+	game.loadBird("red")
+
+# PHASE 4: EscapePress/Closegame
+	//SHOWCODE
+	 buttonsPressed = checkWhichButtonsPressed()
+
+        if escapePressed(buttonsPressed):
+            closeGame()
+
+
+# PHASE 5: Mouseclick/BirdJump
+	//SHOWCODE
+	
+	if mouseClick(buttonsPressed) and game.birdNotDead():
+            game.birdJump()
+
+        game.flap()
+
+# PHASE 6: Move forward
+	//SHOWCODE
+	 game.updateWalls(gameSpeed)
+
+# PHASE 7: Add walls
+	//SHOWCODE
+	
+    	game.loadWalls(wallGap)
+
+# PHASE 8: Show score + update
+	//SHOWCODE
+	if game.wallPassed() and game.birdNotDead():
+            game.score = game.score + 1 #This can be a fcn but we think its good for them to learn
+
+        updateScoreDisplay(game)
+
+
+# PHASE 9: Die
+	//SHOWCODE
+
+	if game.checkHitBottomPipe() == True:
+            game.over = True
+
+        if game.checkHitTopPipe() == True:
+            game.over = True
+
+    	#If bird out of bounds
+        if game.birdOffScreen():
+            game.loadGameOver()
+            newGameCheck(game)
+                
+        updateScreen()
